@@ -4,7 +4,7 @@ require "rubocop"
 class Player
   attr_accessor :symbol, :name
 
-  def initialize(symbol,name)
+  def initialize(symbol, name)
     @symbol = symbol
     @name = name
   end
@@ -13,7 +13,7 @@ end
 # this class represents tic tac toe game and will initialize grid and turns for each player
 class Game
   def initialize
-    @grid_arr = Array.new(3) {Array.new(3){' '}}
+    @grid_arr = Array.new(3) { Array.new(3) { " " } }
     @player_choice_arr = []
   end
 
@@ -37,15 +37,15 @@ class Game
   end
 
   def valid_choice?(choice)
-    return false unless choice.between?(1,9)
+    return false unless choice.between?(1, 9)
 
     row, column = position_to_indices(choice)
-    @grid_arr[row][column] == ' '
+    @grid_arr[row][column] == " "
   end
 
   def position_to_indices(position)
-    row = (position - 1)/3
-    column = (position - 1)%3
+    row = (position - 1) / 3
+    column = (position - 1) % 3
     [row, column]
   end
 
@@ -55,10 +55,10 @@ class Game
   end
 
   def display_grid
-    @grid_arr.each_with_index do |row,index|
-      puts row.map {|cell| cell.empty? ? ' ' : cell}.join(' | ')
-      puts '--+---+---' unless index == @grid_arr.size - 1
-    end  
+    @grid_arr.each_with_index do |row, index|
+      puts row.map { |cell| cell.empty? ? " " : cell }.join(" | ")
+      puts "--+---+---" unless index == @grid_arr.size - 1
+    end
   end
 end
 
@@ -78,17 +78,17 @@ class TicTacToe < Game
   end
 
   def check_winner(player)
-   winning_positions.any? do |line|
-    line.all? {|row, column| @grid_arr[row][column] == player.symbol}
-   end
+    winning_positions.any? do |line|
+      line.all? { |row, column| @grid_arr[row][column] == player.symbol }
+    end
   end
 
   def winning_positions
     rows = [[[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]]]
     columns = [[[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]]]
     diagonals = [
-      [[0,0], [1,1], [2,2]],
-      [[0,2], [1,1],[2,0]]
+      [[0, 0], [1, 1], [2, 2]],
+      [[0, 2], [1, 1], [2, 0]]
     ]
     rows + columns + diagonals
   end
