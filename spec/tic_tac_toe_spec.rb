@@ -82,5 +82,38 @@ describe TicTacToe do
         expect(subject).to be_valid_choice(3)
       end
     end
+    context "when player chooses a number other than 1 - 9" do
+      it "returns false" do
+        expect(subject.valid_choice?(11)).to be false
+      end
+    end
+    context "when player chooses a non-number" do
+      it "returns false" do
+        # since choice will be coverted to integer everytime
+        expect(subject.valid_choice?("xy".to_i)).to be false
+      end
+    end
+    context "When player chooses an already chosen number" do
+      let(:player) { instance_double(Player, symbol: "X") }
+      before do
+        subject.instance_variable_set(:@grid_arr, [["X"]])
+      end
+      it "returns false" do
+        expect(subject.valid_choice?(1)).to be false
+      end
+    end
+  end
+
+  describe "#update_grid" do
+    let(:player) { instance_double(Player, symbol: "X") }
+    before do
+      allow(subject).to receive(:position_to_indices).with(2).and_return([0, 1])
+      subject.instance_variable_set(:@player_choice, 2)
+    end
+    it "updates the grid" do
+      subject.update_grid(player)
+      grid_arr = subject.instance_variable_get(:@grid_arr)
+      expect(grid_arr[0][1]).to eql("X")
+    end
   end
 end
