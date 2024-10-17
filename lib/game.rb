@@ -94,7 +94,4 @@ class TicTacToe < Game
   end
 end
 
-# player1 = Player.new("X", "Gurleen")
-# player2 = Player.new("O", "Gurveen")
-# game = TicTacToe.new
-# game.start(player1, player2)
+

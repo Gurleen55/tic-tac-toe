@@ -1,4 +1,4 @@
-require_relative "../lib/main"
+require_relative "../lib/game"
 
 describe TicTacToe do
   describe "#check_winner" do
@@ -119,26 +119,25 @@ describe TicTacToe do
 
   describe "#start" do
     context "when one player wins the game" do
-      let(:player1) { instance_double(Player, name: "Deadpool", symbol: "X") }
-      let(:player2) { instance_double(Player, name: "Wolverine", symbol: "O") }
+      let(:player1) { instance_double(Player, name: "Adam", symbol: "X") }
+      let(:player2) { instance_double(Player, name: "Eve", symbol: "O") }
       before do
         allow(subject).to receive(:display_grid)
         allow(subject).to receive(:turn)
         allow(subject).to receive(:check_winner).and_return(false, false, true)
       end
-      it "declares Deadpool winner" do
-        expect(subject).to receive(:puts).with("Deadpool wins!").once
+      it "declares Adam winner" do
+        expect(subject).to receive(:puts).with("Adam wins!").once
         subject.start(player1, player2)
       end
     end
     context "when neither of player wins the game" do
-      let(:player1) { instance_double(Player, name: "Deadpool", symbol: "X") }
-      let(:player2) { instance_double(Player, name: "Wolverine", symbol: "O") }
+      let(:player1) { instance_double(Player, name: "Adam", symbol: "X") }
+      let(:player2) { instance_double(Player, name: "Eve", symbol: "O") }
       before do
         allow(subject).to receive(:display_grid)
         allow(subject).to receive(:turn)
-        allow(subject).to receive(:check_winner).and_return(false, false, false, false, false, false, false, false,
-                                                            false)
+        allow(subject).to receive(:check_winner).and_return(false, false, false, false, false, false, false, false, false)
       end
       it "declares a draw" do
         expect(subject).to receive(:puts).with("It's a Draw").once
