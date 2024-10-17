@@ -116,4 +116,34 @@ describe TicTacToe do
       expect(grid_arr[0][1]).to eql("X")
     end
   end
+
+  describe "#start" do
+    context "when one player wins the game" do
+      let(:player1) { instance_double(Player, name: "Deadpool", symbol: "X") }
+      let(:player2) { instance_double(Player, name: "Wolverine", symbol: "O") }
+      before do
+        allow(subject).to receive(:display_grid)
+        allow(subject).to receive(:turn)
+        allow(subject).to receive(:check_winner).and_return(false, false, true)
+      end
+      it "declares Deadpool winner" do
+        expect(subject).to receive(:puts).with("Deadpool wins!").once
+        subject.start(player1, player2)
+      end
+    end
+    context "when neither of player wins the game" do
+      let(:player1) { instance_double(Player, name: "Deadpool", symbol: "X") }
+      let(:player2) { instance_double(Player, name: "Wolverine", symbol: "O") }
+      before do
+        allow(subject).to receive(:display_grid)
+        allow(subject).to receive(:turn)
+        allow(subject).to receive(:check_winner).and_return(false, false, false, false, false, false, false, false,
+                                                            false)
+      end
+      it "declares a draw" do
+        expect(subject).to receive(:puts).with("It's a Draw").once
+        subject.start(player1, player2)
+      end
+    end
+  end
 end
